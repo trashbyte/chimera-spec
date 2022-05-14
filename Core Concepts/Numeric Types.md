@@ -1,5 +1,36 @@
 ### Primitive types
 
+Chimera has a full range of fundamental numeric types, including integers and floating-point real numbers.
+
+Integers for every power of 2 bits from 8 to 128 are available in both signed and unsigned variants.
+
+| type      | minimum value                                        | maximum value                                       |
+| :-------: | :--------------------------------------------------- | :-------------------------------------------------- |
+| `Int8`    | -128                                                 | 127                                                 |
+| `UInt8`   | 0                                                    | 255                                                 |
+| `Int16`   | -32,768                                              | 32,767                                              |
+| `UInt16`  | 0                                                    | 65,535                                              |
+| `Int32`   | -2,147,483,648                                       | 2,147,483,647                                       |
+| `UInt32`  | 0                                                    | 4,294,967,295                                       |
+| `Int64`   | -9,223,372,036,854,775,808                           | 9,223,372,036,854,775,807                           |
+| `UInt64`  | 0                                                    | 18,446,744,073,709,551,615                          |
+| `Int128`  | -170,141,183,460,469,231,731,687,303,715,884,105,728 | 170,141,183,460,469,231,731,687,303,715,884,105,727 |
+| `UInt128` | 0                                                    | 340,282,366,920,938,463,463,374,607,431,768,211,455 |
+
+Floating point values are available in 16, 32, and 64 bit variants.
+
+| type      | precision | smallest possible value | largest possible value |
+| :-------: | :-------: | :---------------------: | :--------------------: |
+| `Float16` | Half      | 5.9604645e-8            | 65504.0                |
+| `Float32` | Full      | 1.40129846432e-45       | 3.40282346639e+38      |
+| `Float64` | Double    | 2.22507385850e-308      | 1.79769313486e+308     |
+
+#### Integer overflow
+
+#### Division errors
+
+### Arbitrary-precision arithmetic
+
 ### Rationals
 
 ### Units

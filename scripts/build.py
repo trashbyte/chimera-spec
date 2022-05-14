@@ -3,17 +3,27 @@ import re
 import shutil
 import mistletoe
 from mistletoe import HTMLRenderer
+from mistletoe.span_token import SpanToken
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name as get_lexer
 from pygments.formatters.html import HtmlFormatter
 from .parser import ChimeraLexer
 
 
-class PygmentsRenderer(HTMLRenderer):
+class GlossaryEntry(SpanToken):
+    pattern = re.compile(r"{g\s*(.+)\s*g}")
+    parse_inner = False
+    precedence = 6
+
+    def __init__(self, match):
+        self.target = match.group(1)
+
+
+class CustomRenderer(HTMLRenderer):
     formatter = HtmlFormatter()
 
     def __init__(self, *extras, style='default'):
-        super().__init__(*extras)
+        super().__init__(GlossaryEntry, *extras)
         self.formatter.encoding = "utf-8"
 
     def render_inline_code(self, token):
@@ -23,6 +33,11 @@ class PygmentsRenderer(HTMLRenderer):
     def render_block_code(self, token):
         lexer = get_lexer(token.language) if token.language else ChimeraLexer()
         return highlight(token.children[0].content, lexer, self.formatter).decode("utf-8")
+
+    def render_glossary_entry(self, token):
+        template = '<a class="glossary-link" href="#glossary/{target}">{target}</a>'
+        target = token.target
+        return template.format(target=target)
 
 
 STATIC_ASSETS = ["Logo.png", "style.css"]
@@ -147,7 +162,7 @@ def build_main():
     toc_html += '</ul></div>'
 
     with open("_build/index.html", "wt", encoding="utf-8") as f:
-        rendered = mistletoe.markdown("\n".join(built_md), PygmentsRenderer)
+        rendered = mistletoe.markdown("\n".join(built_md), CustomRenderer)
         html = HTML_BEFORE+rendered+HTML_AFTER
         print("writing _build/index.html...")
         f.write(html.replace(r"%%TOC%%", toc_html))

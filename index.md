@@ -47,7 +47,7 @@ combinations 100..999 -> map `*` -> filter is-palindrome -> max
 %INCLUDE% Core Concepts/Collections
 %INCLUDE% Core Concepts/Functions and Methods
 %INCLUDE% Core Concepts/Control Flow
-%INCLUDE% Core Concepts/Types
+%INCLUDE% Core Concepts/Traits
 
 ---
 
